@@ -1,0 +1,45 @@
+First, I had to import a series of python lib 
+
+import pandas as pd
+import tensorflow as tf
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense
+
+import numpy as np
+import json
+
+from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
+from google.cloud import bigquery
+from witwidget.notebook.visualization import WitWidget, WitConfigBuilder
+
+Next, I set up BigQuery using the following lib 
+
+query="""
+SELECT
+  weight_pounds,
+  is_male,
+  mother_age,
+  plurality,
+  gestation_weeks
+FROM
+  publicdata.samples.natality
+WHERE year > 2000
+LIMIT 10000
+"""
+df = bigquery.Client().query(query).to_dataframe()
+df.head()
+
+I ran the following queries to see their out comes 
+df.describe()
+df['is_male'].value_counts()
+
+Then, I reshuffled the data to produce a different set of outcomes 
+
+df = df.dropna()
+df = shuffle(df, random_state=2)
+
+data.head()
+
+
+
